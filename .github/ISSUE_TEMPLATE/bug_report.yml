@@ -1,0 +1,123 @@
+name: Bug Report
+description: Report a bug or unexpected behavior in CrateReloaded
+title: "[Bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug! Please fill out the information below to help us investigate and fix the issue.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug Description
+      description: A clear and concise description of what the bug is.
+      placeholder: "Example: When opening a crate, the animation freezes and players don't receive rewards."
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps-to-reproduce
+    attributes:
+      label: Steps to Reproduce
+      description: List the steps to reproduce the behavior.
+      placeholder: |
+        1. Configure a crate with CSGO animation
+        2. Give the crate to a player
+        3. Player right-clicks to open
+        4. Animation freezes at frame 15
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: Expected Behavior
+      description: What did you expect to happen?
+      placeholder: "The animation should complete and the player should receive their reward."
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual-behavior
+    attributes:
+      label: Actual Behavior
+      description: What actually happened?
+      placeholder: "The animation freezes and the inventory becomes unresponsive."
+    validations:
+      required: true
+
+  - type: input
+    id: minecraft-version
+    attributes:
+      label: Minecraft Version
+      description: What version of Minecraft are you running?
+      placeholder: "1.19.2"
+    validations:
+      required: true
+
+  - type: input
+    id: server-software
+    attributes:
+      label: Server Software
+      description: What server software are you using?
+      placeholder: "Spigot, Paper, Purpur, etc."
+    validations:
+      required: true
+
+  - type: input
+    id: plugin-version
+    attributes:
+      label: CrateReloaded Version
+      description: What version of CrateReloaded are you using?
+      placeholder: "2.3.16"
+    validations:
+      required: true
+
+  - type: textarea
+    id: configuration
+    attributes:
+      label: Configuration Files
+      description: Please paste relevant sections of your config.yml and crate configuration files.
+      render: yaml
+      placeholder: |
+        # config.yml
+        handling-claims: true
+
+        # crate.yml
+        MyCrate:
+          animation: CSGO
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Server Logs
+      description: |
+        Please paste any relevant error messages from your server logs.
+        Tip: You can attach log files by clicking this area to highlight it and then dragging files in.
+      render: shell
+      placeholder: |
+        [ERROR] Could not pass event...
+
+  - type: textarea
+    id: other-plugins
+    attributes:
+      label: Other Plugins
+      description: List other plugins you have installed that might be relevant.
+      placeholder: |
+        - Vault 1.7.3
+        - HolographicDisplays 3.0.0
+        - EssentialsX 2.19.4
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
+      options:
+        - label: I am using the latest version of CrateReloaded
+          required: true
+        - label: I have searched existing issues to ensure this is not a duplicate
+          required: true
+        - label: I have included relevant configuration and log files
+          required: true

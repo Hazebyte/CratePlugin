@@ -1,0 +1,16 @@
+# IDE
+*.iml
+.idea
+.run
+
+# Project Files
+dependency-reduced-pom.xml
+
+# Proguard
+mapping.txt
+
+# Build Files
+target/
+
+# Mac
+.DS_Store

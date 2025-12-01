@@ -1,0 +1,49 @@
+# Runtime
+# Java 8
+# -libraryjars <java.home>/lib/rt.jar
+# Java 11
+-libraryjars <java.home>/jmods
+
+# Java 1.8
+-target 1.8
+
+-useuniqueclassmembernames
+-printmapping mapping.txt
+-repackageclasses crate
+-dontwarn
+-dontnote
+-dontshrink
+-dontoptimize
+-keepattributes Exceptions,InnerClasses,Signature,SourceFile,LineNumberTable,*Annotations*,AnnotationDefault, MethodParameters
+
+# Keep main class
+-keep class com.hazebyte.crate.cratereloaded.CorePlugin {
+    public void onEnable();
+	public void onDisable();
+}
+
+# Keep the public API
+-keep class com.hazebyte.crate.api.** { *; }
+-keepclassmembers class com.hazebyte.crate.api.**
+-keep class com.hazebyte.libs.** { *; }
+-keepclassmembers class com.hazebyte.libs.**
+
+# Keep effect lib (Reflection)
+-keep class de.slikey.effectlib.** { *; }
+-keepclassmembers class de.slikey.effectlib.**
+
+# Map Struct
+-keep public class com.hazebyte.crate.cratereloaded.model.mapper.** { *; }
+
+# Keep event handlers
+-keep,allowobfuscation class * extends org.bukkit.event.Listener {
+    @org.bukkit.event.EventHandler <methods>;
+}
+
+# Keep enums
+-keepclassmembers class * extends java.lang.Enum {
+    <fields>;
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}
+

@@ -1,0 +1,9 @@
+[submodule "api"]
+	path = api
+	url = git@github.com:Hazebyte/CrateReloadedAPI.git
+[submodule "utils"]
+	path = utils
+	url = git@github.com:Hazebyte/utils.git
+[submodule "addon/npc"]
+	path = addon/npc
+	url = git@github.com:Hazebyte/CrateReloadedNPC.git

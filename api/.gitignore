@@ -1,0 +1,16 @@
+# Project specific
+.idea/*
+.classpath
+.project
+.settings/*
+bin/*
+
+# Gradle
+.gradle
+gradle.properties
+
+# Output
+build/*
+target/*
+
+*.iml

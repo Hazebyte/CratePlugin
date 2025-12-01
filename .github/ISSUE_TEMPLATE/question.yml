@@ -1,0 +1,78 @@
+name: Question / Support
+description: Ask a question about using CrateReloaded
+title: "[Question] "
+labels: ["question"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Looking for Support?
+
+        For general questions, configuration help, and community support, please use one of the following channels:
+
+        - **Discord**: [discord.gg/0srgnnU1nbB8wMML](https://discord.gg/0srgnnU1nbB8wMML) (Fastest response)
+        - **GitHub Discussions**: For longer-form questions and discussions
+
+        GitHub Issues are primarily for bug reports and feature requests. You'll get faster help on Discord!
+
+        ---
+
+        If you believe your question requires an issue (e.g., unclear documentation, potential bug), please continue below.
+
+  - type: textarea
+    id: question
+    attributes:
+      label: Your Question
+      description: What would you like to know?
+      placeholder: "How do I configure a crate to give random rewards with different probabilities?"
+    validations:
+      required: true
+
+  - type: textarea
+    id: what-tried
+    attributes:
+      label: What Have You Tried?
+      description: What have you already attempted to solve this?
+      placeholder: |
+        - Checked the wiki
+        - Looked at example configurations
+        - Searched existing issues
+        - Asked in Discord (if applicable)
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional Context
+      description: Any additional information that might help answer your question.
+      placeholder: |
+        Minecraft version: 1.19.2
+        Server software: Paper
+        CrateReloaded version: 2.3.16
+
+        Relevant configuration snippets:
+        ```yaml
+        ...
+        ```
+
+  - type: dropdown
+    id: checked-resources
+    attributes:
+      label: Have you checked the documentation?
+      description: Please confirm you've reviewed available resources.
+      options:
+        - Yes, I've checked the wiki and documentation
+        - No, I wasn't aware of the documentation
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
+      options:
+        - label: This question is about CrateReloaded usage or configuration
+          required: true
+        - label: I have searched existing issues and discussions
+          required: true
+        - label: I understand Discord is the preferred channel for quick support
+          required: false

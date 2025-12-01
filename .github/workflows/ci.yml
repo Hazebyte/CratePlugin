@@ -1,0 +1,78 @@
+name: CI
+on: [push]
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          token: ${{secrets.GH_PAT}}
+          submodules: true
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Lint
+        run: make lint
+
+  test:
+    name: Unit and Integration Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          token: ${{secrets.GH_PAT}}
+          submodules: true
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          distribution: 'temurin'
+          cache: maven
+      - name: Test with maven
+        run: mvn -B test -Dspigot.api.version="1.19.2-R0.1-SNAPSHOT" --file pom.xml
+
+  build:
+    needs: [lint, test]
+    name: Build
+    strategy:
+      matrix:
+        java: [ '17' ]
+        spigot-api-version:
+         - '1.12.2-R0.1-SNAPSHOT'
+         - '1.19.2-R0.1-SNAPSHOT'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          token: ${{secrets.GH_PAT}}
+          submodules: true
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: ${{matrix.java}}
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Build with maven
+        run: |
+          mvn -B package -Dspigot.api.version="${{matrix.spigot-api-version}}" -DskipTests --file pom.xml
+
+      - name: Obfuscate
+        run: |
+          ./scripts/obfuscate.sh
+
+      - name: Copy build artifacts
+        run: mkdir staging && cp bukkit/target/*.jar staging
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: build-artifacts
+          path: staging
+          retention-days: 3

@@ -1,0 +1,57 @@
+name: Git Versioning
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'The version of the project'
+        required: true
+jobs:
+  version:
+    name: Tag version
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          token: ${{secrets.GH_PAT}}
+          submodules: true
+
+      - name: Generate tag version
+        run: |
+          echo "project_version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout | tr -d '\n')" >> $GITHUB_ENV
+
+      - name: Create tag
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { project_version } = process.env
+            const new_version = '${{ github.event.inputs.version }}'
+
+            const sha_substring = context.sha.substring(0, 7);
+            const version = new_version ? new_version : project_version
+            const version_sha = `${version}-${sha_substring}`
+
+
+            github.rest.git.createRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: `refs/tags/v${version_sha}`,
+              sha: context.sha
+            }).catch(err => {
+              if (err.status !== 422) throw err;
+              github.rest.git.updateRef({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                ref: 'refs/tags/v${{version_sha}}',
+                sha: context.sha
+              });
+            })
+            github.rest.repos.createRelease({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              tag_name: `v${version_sha}`,
+              name: `v${version_sha}`,
+              generate_release_notes: true
+            })
